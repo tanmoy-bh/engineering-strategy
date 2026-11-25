@@ -1,6 +1,6 @@
 # Engineering Strategy
 
-A reliability concept for a carsharing platform, built as a conversation starter: watch the whole trip from unlock to return, ship app releases behind an unlock-success guardrail, and let AI draft incidents for a person to approve.
+A reliability concept for a consumer mobile platform, built as a conversation starter: watch the whole trip from unlock to return, ship app releases behind an unlock-success guardrail, and let AI draft incidents for a person to approve.
 
 Live at **https://projects.tanmoybh.com/engineering-strategy/** (passphrase protected).
 
@@ -14,7 +14,7 @@ Live at **https://projects.tanmoybh.com/engineering-strategy/** (passphrase prot
 
 ## What is real and what is sample
 
-**Real:** the friction themes, taken from public App Store reviews and press coverage. **Sample:** every metric, version, incident and score. The page is not affiliated with or endorsed by GetGo.
+**Real:** the friction themes, taken from public App Store reviews and press coverage. **Sample:** every metric, version, incident and score. The page is not affiliated with or endorsed by any company.
 
 ## Layout
 
