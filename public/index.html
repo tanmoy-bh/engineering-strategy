@@ -106,18 +106,27 @@ section[hidden]{display:none}
 .pill.amber{color:var(--amber);background:color-mix(in srgb,var(--amber) 12%,transparent);border-color:color-mix(in srgb,var(--amber) 25%,transparent)}
 
 /* journey route */
-.route{position:relative;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:8px 0 4px}
-.route::before{content:"";position:absolute;top:30px;left:calc(100%/14);right:calc(100%/14);height:3px;border-radius:3px;background:linear-gradient(90deg,var(--line2),var(--line2))}
-.st{position:relative;text-align:center;padding:0 4px;cursor:default}
-.node{position:relative;z-index:1;width:46px;height:46px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:2px solid var(--ok);color:var(--ok);transition:transform .25s var(--ease),box-shadow .25s}
-.st:hover .node{transform:scale(1.1);box-shadow:0 8px 20px -8px var(--sh)}
-.st.warn .node{border-color:var(--amber);color:var(--amber)}
-.st.bad .node{border-color:var(--red);background:var(--red);color:#fff}
-.st .nm{font-weight:600;font-size:13.5px}
-.st .v{font:600 19px/1.2 "Inter Tight",sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:2px}
+.journey{margin-bottom:18px}
+.journey .ttl{flex-wrap:wrap;margin-bottom:22px}
+.journey .ttl .note{margin-left:auto}
+.route{position:relative;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.route::before{display:none}
+.st{position:relative;text-align:center;padding:16px 8px 18px;border-radius:14px;border:1px solid transparent;cursor:default;transition:background .25s,border-color .25s,transform .25s var(--ease)}
+.st:not(:last-child)::after{content:"";position:absolute;top:43px;left:calc(50% + 36px);width:calc(100% - 72px + 8px);height:2px;border-radius:2px;background:var(--line2)}
+.st:hover{background:var(--surface2);border-color:var(--line);transform:translateY(-2px)}
+.node{position:relative;z-index:1;width:54px;height:54px;margin:0 auto 14px;border-radius:16px;display:grid;place-items:center;background:color-mix(in srgb,var(--ok) 10%,var(--surface));border:1.5px solid color-mix(in srgb,var(--ok) 45%,var(--line));color:var(--ok);transition:transform .25s var(--ease),box-shadow .25s}
+.node .i{width:22px;height:22px}
+.st:hover .node{transform:scale(1.06);box-shadow:0 10px 24px -10px var(--sh)}
+.st.warn .node{background:color-mix(in srgb,var(--amber) 10%,var(--surface));border-color:color-mix(in srgb,var(--amber) 45%,var(--line));color:var(--amber)}
+.st.bad .node{border-color:var(--red);background:var(--red);color:#fff;box-shadow:0 10px 24px -10px color-mix(in srgb,var(--red) 70%,transparent)}
+.st .nm{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.st .v{font:600 26px/1.15 "Inter Tight",sans-serif;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap;margin:6px 0 2px}
 .st.bad .v{color:var(--red)}
-.st .t{font-size:12px;color:var(--mute);white-space:nowrap}
-.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mute)}
+.st .t{font-size:12.5px;color:var(--mute);white-space:nowrap;margin-bottom:10px}
+.st .pill{font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--mute)}
+.causes .cz{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:28px;align-items:center}
+.causes .fixes{margin-top:0}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
 
@@ -235,15 +244,24 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
 @media(max-width:720px){
   .meta .chip,.brand small,.icon-btn .lbl{display:none}
   .hd{flex-wrap:nowrap;padding-top:10px}.brand h1{font-size:17px}.logo{width:34px;height:34px;border-radius:10px}.tabs{margin-top:6px}
-  .route{grid-template-columns:minmax(0,1fr);gap:4px}
-  .route::before{top:23px;bottom:23px;left:22px;right:auto;width:3px;height:auto}
-  .st{display:grid;grid-template-columns:46px minmax(0,1fr) auto;align-items:center;gap:2px 14px;text-align:left;padding:4px 0}
-  .node{margin:0;grid-row:1/3}
-  .st .v{grid-column:3;grid-row:1;text-align:right}.st .t{grid-column:3;grid-row:2;text-align:right}.st .nm{grid-row:1/3}
   .rail{grid-template-columns:repeat(5,minmax(7.2em,1fr));overflow-x:auto;padding-bottom:4px}
   .metrics{grid-template-columns:minmax(0,1fr)}
   .fd,.inc,.pad{padding:20px}
   .kv>div{grid-template-columns:minmax(0,1fr)}.kv .k{display:none}
+}
+@media(max-width:900px){
+  .causes .cz{grid-template-columns:minmax(0,1fr)}
+  .route{grid-template-columns:minmax(0,1fr);gap:4px}
+  .st{display:grid;grid-template-columns:44px minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;gap:2px 14px;text-align:left;padding:10px 8px}
+  .st:not(:last-child)::after{top:calc(50% + 26px);left:29px;width:2px;height:calc(100% - 48px)}
+  .node{width:44px;height:44px;border-radius:13px;margin:0;grid-row:1/3}
+  .node .i{width:19px;height:19px}
+  .st .nm{grid-column:2;grid-row:1;align-self:end;font-size:12.5px;color:var(--ink);letter-spacing:.03em}
+  .st .t{grid-column:2;grid-row:2;align-self:start;margin:0}
+  .st .v{grid-column:3;grid-row:1;align-self:end;text-align:right;font-size:21px;margin:0}
+  .st .pill{grid-column:3;grid-row:2;justify-self:end;align-self:start}
+  .st:hover{transform:none}
+  .journey .ttl .note{margin-left:0;width:100%}
 }
 @media(prefers-reduced-motion:no-preference){
   section:not([hidden])>*{animation:up .45s var(--ease) both}
@@ -344,14 +362,16 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
       <div class="fg card lift" style="--d:2"><div class="top"><span class="ico"><svg class="i"><use href="#i-pin"/></svg></span></div><b>97.4%</b><span class="l">returned inside the bay zone</span></div>
       <div class="fg card lift" style="--d:3"><div class="top"><span class="ico"><svg class="i"><use href="#i-pie"/></svg></span></div><b>68%</b><span class="l">of failed unlocks from 2 causes</span></div>
     </div>
-    <div class="grid2">
-      <div class="card pad">
-        <div class="ttl"><span class="ico"><svg class="i"><use href="#i-car"/></svg></span><h3>Trip journey health</h3></div>
-        <div class="route" id="route" aria-label="Trip journey health"></div>
-        <div class="legend"><span><i style="background:var(--ok)"></i>On target</span><span><i style="background:var(--amber)"></i>Within 1 pt</span><span><i style="background:var(--red)"></i>More than 1 pt off</span><span style="margin-left:auto">Sample figures for illustration.</span></div>
+    <div class="card pad journey">
+      <div class="ttl"><span class="ico"><svg class="i"><use href="#i-car"/></svg></span><h3>Trip journey health</h3>
+        <div class="legend note"><span><i style="background:var(--ok)"></i>On target</span><span><i style="background:var(--amber)"></i>Within 1 pt</span><span><i style="background:var(--red)"></i>More than 1 pt off</span></div>
       </div>
-      <div class="card pad">
-        <div class="ttl"><span class="ico red"><svg class="i"><use href="#i-bt"/></svg></span><h3>Failed unlocks by cause, last 7 days</h3></div>
+      <div class="route" id="route" aria-label="Trip journey health"></div>
+      <p class="note" style="margin:14px 0 0;text-align:right;max-width:none">Sample figures for illustration.</p>
+    </div>
+    <div class="card pad causes">
+      <div class="ttl"><span class="ico red"><svg class="i"><use href="#i-bt"/></svg></span><h3>Failed unlocks by cause, last 7 days</h3></div>
+      <div class="cz">
         <div class="bars" id="bars"></div>
         <div class="fixes"><svg class="i"><use href="#i-check-circle"/></svg><p>Two fixes target the top bars: a signed unlock credential fetched at booking start, so a basement with no signal still unlocks, and an automatic Bluetooth retry with a guided fallback.</p></div>
       </div>
@@ -456,7 +476,8 @@ window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
 
 /* trip health */
 const stations=[["Register",99.2,99.0,"user-plus"],["Find car",97.6,98.0,"search"],["Book",99.6,99.5,"calendar"],["Unlock",98.1,99.5,"unlock"],["Drive",99.3,99.0,"car"],["Return",97.4,98.0,"pin"],["Pay",99.7,99.5,"card"]];
-$("route").innerHTML=stations.map(([n,v,t,ic],i)=>{const g=t-v,c=g<=0?"ok":g<1?"warn":"bad";return `<div class="st ${c}" style="--d:${i}" title="${esc(n)}: ${v.toFixed(1)}% against a ${t.toFixed(1)}% target"><span class="node">${I(ic)}</span><div class="nm">${esc(n)}</div><div class="v">${v.toFixed(1)}%</div><div class="t">target ${t.toFixed(1)}</div></div>`}).join("");
+$("route").innerHTML=stations.map(([n,v,t,ic],i)=>{const g=t-v,c=g<=0?"ok":g<1?"warn":"bad";const d=Math.round((v-t)*10)/10,pc=c==="ok"?"ok":c==="warn"?"amber":"red";
+  return `<div class="st ${c}" style="--d:${i}"><span class="node">${I(ic)}</span><div class="nm">${esc(n)}</div><div class="v">${v.toFixed(1)}%</div><div class="t">target ${t.toFixed(1)}%</div><span class="pill ${pc}">${d>=0?"+":"−"}${Math.abs(d).toFixed(1)} pt</span></div>`}).join("");
 const causes=[["Bluetooth handshake timeout",41],["No signal in basement car park",27],["Car telematics unit offline",18],["Unlock credential expired",9],["Other",5]];
 $("bars").innerHTML=causes.map((c,i)=>`<div class="bar${i<2?" top":""}"><div class="bl"><span>${esc(c[0])}</span><em>${c[1]}%</em></div><div class="track"><i style="--w:${(c[1]/41*100).toFixed(0)}%;--d:${i}"></i></div></div>`).join("");
 
