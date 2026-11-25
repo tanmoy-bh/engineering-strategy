@@ -1,0 +1,11 @@
+{
+  "name": "engineering-strategy",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Engineering Strategy: a reliability concept for a carsharing platform (trip health, guarded releases, AI incident copilot).",
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes wrangler@4.40.0 pages dev public",
+    "test": "node --test"
+  }
+}
