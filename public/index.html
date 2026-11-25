@@ -238,6 +238,33 @@ input[type=checkbox]{width:18px;height:18px;accent-color:var(--red);margin:0}
 .about{margin-top:18px}
 .about .card{padding:22px 24px}
 
+/* sentiment */
+.bar.p .track i{background:linear-gradient(90deg,color-mix(in srgb,var(--ok) 60%,#a7f3d0),var(--ok))}
+.bar.n .track i{background:linear-gradient(90deg,color-mix(in srgb,var(--red) 70%,#ff9a8f),var(--red))}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--mute);margin:16px 0 0}
+.key span{display:inline-flex;align-items:center;gap:6px}
+.key i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.stk{display:grid;grid-template-columns:4.8em minmax(0,1fr) 7em;gap:12px;align-items:center;font-size:13.5px;margin-bottom:12px}
+.stk .s{display:flex;height:14px;border-radius:999px;overflow:hidden;background:var(--surface2);border:1px solid var(--line)}
+.stk .s b{display:block;height:100%}
+.sp{background:var(--ok)}.sn{background:var(--red)}.su{background:var(--line2)}
+.stk em{font-style:normal;color:var(--mute);white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+.thm{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr) minmax(0,1fr) 4em;gap:10px;align-items:center;font-size:14px;padding:6px 0;border-bottom:1px solid var(--line)}
+.thm:last-child{border-bottom:0}
+.thm .l,.thm .r{height:12px;display:flex}
+.thm .l{justify-content:flex-end}
+.thm .l b{background:var(--red);border-radius:999px 0 0 999px;height:100%}
+.thm .r b{background:var(--ok);border-radius:0 999px 999px 0;height:100%}
+.thm em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.thm.h{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line2)}
+.sgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-bottom:18px;align-items:stretch}
+.sgrid .card,.thmc{padding:22px 24px}
+.thmc{margin-bottom:18px}
+.rec .mt b{display:flex;justify-content:space-between;gap:8px}
+.rec .mt .pill{font-variant-numeric:tabular-nums}
+@media(max-width:960px){.sgrid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:720px){.thm{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 3.4em}.thm>span:first-child{grid-column:1/-1}.thm.h>span:first-child{display:none}.stk{grid-template-columns:4.2em minmax(0,1fr) 6em}.sgrid .card,.thmc{padding:20px}}
+
 footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:12.5px;color:var(--mute)}
 
 @media(max-width:960px){.grid2,.fric{grid-template-columns:minmax(0,1fr)}.figs{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.ctl{grid-template-columns:minmax(0,1fr)}.opts{justify-self:start}.fl{flex-direction:row;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.fl button{flex:none}.fl button:hover{transform:translateY(-2px)}}
@@ -324,6 +351,9 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></symbol>
   <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></symbol>
+  <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24"><path d="m22 17-8.5-8.5-5 5L2 7"/><path d="M16 17h6v-6"/></symbol>
 </svg>
 
@@ -343,6 +373,7 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
   <div class="tabs" role="tablist" aria-label="Concept sections">
     <button role="tab" id="t-health" aria-controls="health"><svg class="i"><use href="#i-activity"/></svg>Trip health</button>
     <button role="tab" id="t-friction" aria-controls="friction"><svg class="i"><use href="#i-msg"/></svg>What users report</button>
+    <button role="tab" id="t-sentiment" aria-controls="sentiment"><svg class="i"><use href="#i-smile"/></svg>Review sentiment</button>
     <button role="tab" id="t-release" aria-controls="release"><svg class="i"><use href="#i-shield"/></svg>Guarded release</button>
     <button role="tab" id="t-copilot" aria-controls="copilot"><svg class="i"><use href="#i-sparkles"/></svg>AI copilot<span class="badge" id="bdg" hidden>1</span></button>
     <button role="tab" id="t-measure" aria-controls="measure"><svg class="i"><use href="#i-target"/></svg>How I'd measure</button>
@@ -390,9 +421,52 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
     </div>
   </section>
 
+  <section id="sentiment" role="tabpanel" aria-labelledby="t-sentiment" hidden>
+    <div>
+      <div class="eyebrow"><svg class="i"><use href="#i-smile"/></svg>03 · Review sentiment</div>
+      <h2>Reviews turned from praise to complaints, and the complaints are about operations</h2>
+      <p class="lead">Sentiment of the latest 500 App Store reviews in Singapore, January 2024 to November 2026, scored from star ratings and checked against the review text. Real data, analysed on 25 Nov 2026.</p>
+    </div>
+    <div class="figs">
+      <div class="fg card lift" style="--d:0"><div class="top"><span class="ico"><svg class="i"><use href="#i-msg"/></svg></span><span class="pill">3.8 ★ avg</span></div><b>500</b><span class="l">written reviews analysed</span></div>
+      <div class="fg card lift" style="--d:1"><div class="top"><span class="ico ok"><svg class="i"><use href="#i-smile"/></svg></span><span class="pill ok">4–5 ★</span></div><b>72%</b><span class="l">positive overall</span></div>
+      <div class="fg card lift bad" style="--d:2"><div class="top"><span class="ico red"><svg class="i"><use href="#i-down"/></svg></span><span class="pill red">since Jul 2025</span></div><b>88%</b><span class="l">negative recently (37 of 42)</span></div>
+      <div class="fg card lift" style="--d:3"><div class="top"><span class="ico"><svg class="i"><use href="#i-check-circle"/></svg></span></div><b>77%</b><span class="l">where the text agrees with the stars</span></div>
+    </div>
+    <div class="sgrid">
+      <div class="card">
+        <div class="ttl"><span class="ico"><svg class="i"><use href="#i-star"/></svg></span><div><h3>The distribution is J-shaped</h3><div class="note">Reviews by star rating; people write at the extremes</div></div></div>
+        <div class="bars" id="hist"></div>
+        <div class="key"><span><i style="background:var(--ok)"></i>Positive 358 (72%)</span><span><i style="background:var(--line2)"></i>Neutral 36 (7%)</span><span><i style="background:var(--red)"></i>Negative 106 (21%)</span></div>
+      </div>
+      <div class="card">
+        <div class="ttl"><span class="ico red"><svg class="i"><use href="#i-calendar"/></svg></span><div><h3>The positive total comes from one burst</h3><div class="note">Sentiment mix per half-year, with reviews and average rating</div></div></div>
+        <div id="stk"></div>
+        <div class="fixes"><svg class="i" style="color:var(--amber)"><use href="#i-alert"/></svg><p>308 reviews arrived in January and February 2024, only 9 of them negative, which looks like an in-app rating prompt. Without that burst, reviewers are mostly people with a problem.</p></div>
+      </div>
+    </div>
+    <div class="card thmc">
+      <div class="ttl"><span class="ico"><svg class="i"><use href="#i-layers"/></svg></span><div><h3>What each theme does to sentiment</h3><div class="note">Share of negative and positive reviews mentioning each theme, with the average rating. A review can mention several.</div></div></div>
+      <div id="thm"></div>
+    </div>
+    <div class="ttl" style="margin:26px 0 14px"><span class="ico red"><svg class="i"><use href="#i-alert"/></svg></span><div><h3>What the last 42 reviews complain about</h3><div class="note">July 2025 to November 2026, paraphrased</div></div></div>
+    <div class="metrics rec" id="recent"></div>
+    <div class="about grid2">
+      <div class="card lift">
+        <div class="ttl"><span class="ico ok"><svg class="i"><use href="#i-bulb"/></svg></span><h3>What this means for engineering</h3></div>
+        <p>Unlocking comes up in only 1 of the last 42 reviews. The recent pain is in app flows (login, repeated verification, the photo step, adding a card) and in operations data (car condition, charges, fines). That points to funnel monitoring on those flows and a tighter loop from user reports to the fleet team, ahead of Bluetooth work.</p>
+        <p style="margin:0">Where text and stars disagree, it's usually "the app is good, the service isn't" (10 low-star reviews with positive words) or "great, but…" (27 high-star reviews with complaint words).</p>
+      </div>
+      <div class="card lift">
+        <div class="ttl"><span class="ico"><svg class="i"><use href="#i-book"/></svg></span><h3>How it was measured</h3></div>
+        <p class="note" style="margin:0">Source: Apple's public review feed for the Singapore App Store, which returns the latest 500 written reviews; Google Play is not included. Sentiment: 4–5 stars positive, 3 neutral, 1–2 negative, cross-checked with a word list of about 110 positive and negative terms with negation handling. Themes: keyword rules; 78 reviews matched no theme. Recent figures rest on 42 reviews, so read them as direction, not precision. Only aggregates are stored on this page.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="release" role="tabpanel" aria-labelledby="t-release" hidden>
     <div>
-      <div class="eyebrow"><svg class="i"><use href="#i-shield"/></svg>03 · Guarded release</div>
+      <div class="eyebrow"><svg class="i"><use href="#i-shield"/></svg>04 · Guarded release</div>
       <h2>Every app release guards unlock success, not just crashes</h2>
       <p class="lead">Version 4.12 rolls out in stages. A stage advances only if unlock success stays within the guardrail. Try it.</p>
     </div>
@@ -414,7 +488,7 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
 
   <section id="copilot" role="tabpanel" aria-labelledby="t-copilot" hidden>
     <div>
-      <div class="eyebrow"><svg class="i"><use href="#i-sparkles"/></svg>04 · AI copilot</div>
+      <div class="eyebrow"><svg class="i"><use href="#i-sparkles"/></svg>05 · AI copilot</div>
       <h2>AI drafts the incident, a person decides</h2>
       <p class="lead">An LLM judge scores every draft first. Nothing reaches customers automatically.</p>
     </div>
@@ -423,7 +497,7 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
 
   <section id="measure" role="tabpanel" aria-labelledby="t-measure" hidden>
     <div>
-      <div class="eyebrow"><svg class="i"><use href="#i-target"/></svg>05 · How I'd measure</div>
+      <div class="eyebrow"><svg class="i"><use href="#i-target"/></svg>06 · How I'd measure</div>
       <h2>Every change ties to a number we review each fortnight</h2>
       <p class="lead">Targets are starting proposals, to be set after a 30-day baseline with the team.</p>
     </div>
@@ -441,7 +515,7 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
     </div>
   </section>
 </main>
-<footer>Engineering Strategy · a concept by Tanmoy Bhattacharjee · sample data throughout</footer>
+<footer>Engineering Strategy · a concept by Tanmoy Bhattacharjee · sample data throughout, except the Review sentiment tab, which uses real public reviews</footer>
 
 <script>
 {
@@ -556,6 +630,16 @@ $("replay").addEventListener("click",replay);
 $("see").addEventListener("click",()=>show("copilot",true));
 $("thr").addEventListener("input",()=>{if(halted<0)renderRel();else $("thrv").textContent=thr().toFixed(1);});
 $("reg").addEventListener("change",replay);
+
+/* review sentiment (aggregates from 500 App Store reviews, 25 Nov 2026) */
+const stars=[[5,234,"p"],[4,124,"p"],[3,36,""],[2,18,"n"],[1,88,"n"]];
+$("hist").innerHTML=stars.map(([k,n,c],i)=>`<div class="bar ${c}"><div class="bl"><span>${k} star${k>1?"s":""}</span><em>${n}</em></div><div class="track"><i style="--w:${(n/234*100).toFixed(0)}%;--d:${i}"></i></div></div>`).join("");
+const per=[["2024 H1",344,305,18,21,4.37],["2024 H2",50,18,9,23,2.70],["2025 H1",64,31,8,25,3.13],["2025 H2",12,1,1,10,1.50],["2026 H1",19,3,0,16,1.63],["2026 H2",11,0,0,11,1.09]];
+$("stk").innerHTML=per.map(([p,n,po,ne,ng,av])=>`<div class="stk"><span>${p}</span><div class="s" title="${po} positive, ${ne} neutral, ${ng} negative"><b class="sp" style="width:${po/n*100}%"></b><b class="su" style="width:${ne/n*100}%"></b><b class="sn" style="width:${ng/n*100}%"></b></div><em>${n} · ${av.toFixed(1)} ★</em></div>`).join("");
+const thm=[["Ease and convenience",205,189,8,4.48],["Customer support",149,98,43,3.58],["Price and fees",107,57,45,3.11],["Car condition and cleanliness",105,71,24,3.64],["Availability and parking",105,81,17,3.95],["App bugs and login",68,21,36,2.47],["Unlock and Bluetooth",62,41,11,3.63],["Signal and offline",58,40,11,3.74],["Damage and claims",34,12,19,2.53],["Late returns and extensions",32,11,17,2.44]];
+$("thm").innerHTML=`<div class="thm h"><span>Theme</span><span style="text-align:right">Negative</span><span>Positive</span><em>Avg</em></div>`+thm.map(([k,n,po,ng,av])=>`<div class="thm"><span>${esc(k)} <span class="note">${n}</span></span><div class="l"><b style="width:${ng/n*100}%" title="${Math.round(ng/n*100)}% negative"></b></div><div class="r"><b style="width:${po/n*100}%" title="${Math.round(po/n*100)}% positive"></b></div><em style="color:${av<3?"var(--red)":"inherit"}">${av.toFixed(1)} ★</em></div>`).join("");
+const rec=[["App bugs and login",12,"Login failures, repeated identity verification, the app hanging just before the photo step, no way to add a new card.","alert"],["Price and fees",11,"Charges first-time users didn't expect, and full fares for cars with broken air-conditioning.","coins"],["Damage and claims",7,"Disputed damage bills, and a traffic fine nobody was told about.","camera"],["Customer support",7,"Slow live agents and no follow-up, including on a reported safety issue.","headset"],["Car condition",5,"Poorly maintained cars and no notice about maintenance.","wrench"],["Unlock and Bluetooth",1,"Rarely raised now, despite being the classic carsharing failure.","bt"]];
+$("recent").innerHTML=rec.map(([k,n,d,ic],i)=>`<div class="mt card lift" style="--d:${i}"><span class="ico${n>=7?" red":""}">${I(ic)}</span><b>${esc(k)}<span class="pill${n>=7?" red":""}">${n} review${n>1?"s":""}</span></b><span class="d">${esc(d)}</span></div>`).join("");
 
 /* measures */
 const metrics=[["Unlock success","98.1% now, 99.5% target","per app version and location type","unlock"],["P95 tap-to-unlock","11.4 s now, 5 s target","the wait a user feels","timer"],["Change failure rate","releases needing a rollback or hotfix","DORA, per team","branch"],["Time to restore","from alert to users unaffected","Squadcast and Datadog","buoy"],["AI draft acceptance","copilot drafts approved with light edits","plus LLM judge score","sparkles"],["Cost per 1,000 trips","cloud and telemetry spend","visible to leadership","coins"]];
