@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineering Strategy</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Engineering strategy concept: trip health, guarded releases and an AI incident copilot for a carsharing platform.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE work: a calm control-room console shown to a CPTO, one idea per tab
+   IDEA a fleet ops console: tabs across the top, one panel at a time, nothing competing
+   PICTURE per tab: trip route, friction list with detail, staged-release rail, incident card
+   COLOUR steel panel, black ink, white, alarm red accent; night #16191c
+   TYPE Inter Tight 600 display + Inter text
+   LAYOUT slim header, tab bar, one panel at max 1100px; panels stack below 720px */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#16191c);--ink:light-dark(#0b0c0e,#eef1f3);--mute:light-dark(#4f575d,#a9b2b9);--panel:light-dark(#d5dbe0,#232a30);--soft:light-dark(#eef1f3,#1d2328);--rule:light-dark(#bcc4ca,#38424a);--red:#e8251a;--amber:light-dark(#b86e00,#f0a73a);--ok:light-dark(#1f7a4a,#4fc283)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip;display:flex;flex-direction:column}
+h1,h2,h3{font-family:"Inter Tight",Inter,sans-serif;letter-spacing:-.02em;line-height:1.1;margin:0}
+h1{font-size:clamp(22px,2.6vw,28px);font-weight:600}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:600;text-wrap:balance;max-width:24ch}
+h3{font-size:17px;font-weight:600}
+p{margin:0 0 12px;max-width:66ch}
+a{color:inherit}
+.note{font-size:13px;color:var(--mute)}
+header{background:var(--panel);padding:18px max(4vw,16px) 0}
+.hd{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px;align-items:baseline}
+.tabs{max-width:1100px;margin:14px auto 0;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs button{flex:none;font:600 15px Inter,sans-serif;min-height:46px;padding:0 18px;border:0;background:transparent;color:var(--mute);cursor:pointer;border-top:3px solid transparent;position:relative}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--bg);color:var(--ink);border-top-color:var(--ink)}
+.tabs button:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--red);outline-offset:-3px}
+.badge{display:inline-block;min-width:20px;height:20px;line-height:20px;border-radius:10px;background:var(--red);color:#fff;font-size:12px;text-align:center;margin-left:6px;padding:0 6px}
+main{flex:1;padding:clamp(22px,3vw,40px) max(4vw,16px) 32px}
+section{max-width:1100px;margin:0 auto}
+section[hidden]{display:none}
+.lead{margin:10px 0 22px;color:var(--mute);font-size:17px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:start}
+.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:26px}
+.fg{border-top:3px solid var(--ink);padding-top:8px}
+.fg b{display:block;font:600 clamp(26px,3vw,34px)/1.05 "Inter Tight",sans-serif;white-space:nowrap}
+.fg span{font-size:14px;color:var(--mute)}
+.fg.bad{border-color:var(--red)}.fg.bad b{color:var(--red)}
+.route{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));background:var(--soft);padding:18px 14px 10px;border:1px solid var(--rule)}
+.st{position:relative;padding:40px 6px 4px}
+.st::before{content:"";position:absolute;top:15px;left:0;right:0;height:5px;background:var(--ink)}
+.st:first-child::before{left:12px}.st:last-child::before{right:calc(100% - 12px)}
+.dot{position:absolute;top:6px;left:2px;width:22px;height:22px;border-radius:50%;background:var(--bg);border:5px solid var(--ok)}
+.st.warn .dot{border-color:var(--amber)}
+.st.bad .dot{border-color:var(--red);background:var(--red)}
+.st .nm{font-weight:600;font-size:14px}
+.st .v{font:600 20px/1.1 "Inter Tight",sans-serif;white-space:nowrap}
+.st.bad .v{color:var(--red)}
+.st .t{font-size:13px;color:var(--mute);white-space:nowrap}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:minmax(0,14em) minmax(0,1fr) 3em;gap:10px;align-items:center;font-size:14px}
+.bar i{display:block;height:14px;background:var(--ink)}
+.bar.top i{background:var(--red)}
+.bar em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+.fric{display:grid;grid-template-columns:minmax(0,17em) minmax(0,1fr);border:1px solid var(--rule)}
+.fl{display:flex;flex-direction:column;background:var(--soft);border-right:1px solid var(--rule)}
+.fl button{text-align:left;font:500 15px Inter,sans-serif;min-height:52px;padding:10px 16px;border:0;border-bottom:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer;display:flex;gap:10px;align-items:center}
+.fl button:last-child{border-bottom:0}
+.fl button span{font:600 13px "Inter Tight",sans-serif;color:var(--mute);width:1.4em;flex:none}
+.fl button[aria-pressed=true]{background:var(--bg);font-weight:600;box-shadow:inset 4px 0 0 var(--red)}
+.fd{padding:22px 24px}
+.fd h3{font-size:22px;margin-bottom:14px}
+.kv{display:grid;grid-template-columns:9em minmax(0,1fr);gap:12px 16px;margin:0}
+.kv dt{font-size:13px;font-weight:600;color:var(--mute);padding-top:2px}
+.kv dd{margin:0}
+.kv dd.move{font-weight:600}
+.rail{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:4px 0 14px}
+.sg{border:1px solid var(--rule);background:var(--bg);padding:10px;font-size:13px}
+.sg b{display:block;font:600 20px/1.1 "Inter Tight",sans-serif}
+.sg .k{color:var(--mute)}
+.sg.done{border-color:var(--ok);box-shadow:inset 0 3px 0 var(--ok)}
+.sg.cur{outline:2px solid var(--ink)}
+.sg.halt{border-color:var(--red);box-shadow:inset 0 3px 0 var(--red);background:color-mix(in srgb,var(--red) 10%,var(--bg))}
+.status{font-weight:600;padding:12px 14px;border-left:4px solid var(--ok);background:var(--soft)}
+.status.halt{border-color:var(--red)}
+.ctl{background:var(--soft);border:1px solid var(--rule);padding:18px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+.btn{font:600 15px Inter,sans-serif;min-height:44px;padding:0 16px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.sec{background:var(--bg);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+label{font-size:14px}
+input[type=range]{accent-color:var(--red);width:150px;vertical-align:middle}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--red);vertical-align:middle;margin:0 8px 0 0}
+.inc{border:1px solid var(--rule);padding:22px 24px}
+.tag{display:inline-block;font-size:13px;padding:2px 8px;border:1px solid var(--rule);margin:0 6px 6px 0;white-space:nowrap}
+.tag.red{border-color:var(--red);color:var(--red)}
+.inc ol,.inc ul{margin:6px 0 14px;padding-left:20px}
+.inc li{margin-bottom:4px}
+.score{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:6px 0 10px}
+.score div{border:1px solid var(--rule);padding:8px;font-size:13px}
+.score b{display:block;font-size:17px}
+.approved{border-left:4px solid var(--ok);padding:10px 12px;background:var(--soft);font-weight:600}
+.empty{border:1px dashed var(--rule);padding:28px;text-align:center}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 18px}
+.metrics div{border-top:3px solid var(--ink);padding-top:8px}
+.metrics b{display:block;font:600 17px "Inter Tight",sans-serif}
+.about{margin-top:30px;padding-top:20px;border-top:1px solid var(--rule)}
+@media(max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}.figs{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.route{grid-template-columns:minmax(0,1fr);padding:14px}.st{padding:2px 0 12px 38px}.st::before{top:0;bottom:0;left:11px;right:auto;width:5px;height:auto}.st:first-child::before{top:12px;left:11px}.st:last-child::before{bottom:calc(100% - 12px);right:auto}.dot{top:2px;left:2px}.fric{grid-template-columns:minmax(0,1fr)}.fl{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--rule)}.fl button{flex:none;border-bottom:0;border-right:1px solid var(--rule)}.fl button[aria-pressed=true]{box-shadow:inset 0 -4px 0 var(--red)}.kv{grid-template-columns:minmax(0,1fr);gap:4px}.kv dd{margin-bottom:10px}.rail{grid-template-columns:repeat(5,minmax(4.4em,1fr));overflow-x:auto}.bar{grid-template-columns:minmax(0,1fr) 3em}.bar i{grid-column:1/3;grid-row:2}.metrics{grid-template-columns:minmax(0,1fr)}.score{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:no-preference){.st.bad .dot{animation:pulse 1.6s ease-in-out infinite}section{animation:fade .18s ease-out}}
+@keyframes pulse{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--red) 25%,transparent)}}
+@keyframes fade{from{opacity:.4}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hd">
+    <h1>Engineering Strategy <span style="font-weight:500;color:var(--mute)">· unlock to return</span></h1>
+    <span class="note">By Tanmoy Bhattacharjee · sample data, public information only · not affiliated with GetGo · <a href="__logout">Sign out</a></span>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Concept sections">
+    <button role="tab" id="t-health" aria-controls="health">Trip health</button>
+    <button role="tab" id="t-friction" aria-controls="friction">What users report</button>
+    <button role="tab" id="t-release" aria-controls="release">Guarded release</button>
+    <button role="tab" id="t-copilot" aria-controls="copilot">AI copilot<span class="badge" id="bdg" hidden>1</span></button>
+    <button role="tab" id="t-measure" aria-controls="measure">How I'd measure</button>
+  </div>
+</header>
+
+<main>
+  <section id="health" role="tabpanel" aria-labelledby="t-health">
+    <h2>Unlock misses its target by the most, and it's fixable</h2>
+    <p class="lead">Watch the whole trip, not individual services. Each step has a success target agreed with Product and Ops.</p>
+    <div class="figs">
+      <div class="fg bad"><b>98.1%</b><span>unlock success, target 99.5%</span></div>
+      <div class="fg bad"><b>11.4 s</b><span>P95 tap-to-unlock, target 5 s</span></div>
+      <div class="fg"><b>97.4%</b><span>returned inside the bay zone</span></div>
+      <div class="fg"><b>68%</b><span>of failed unlocks from 2 causes</span></div>
+    </div>
+    <div class="grid2">
+      <div>
+        <div class="route" id="route" aria-label="Trip journey health"></div>
+        <p class="note" style="margin-top:8px">Sample figures for illustration.</p>
+      </div>
+      <div>
+        <h3 style="margin-bottom:12px">Failed unlocks by cause, last 7 days</h3>
+        <div class="bars" id="bars"></div>
+        <p style="margin-top:16px">Two fixes target the top bars: a signed unlock credential fetched at booking start, so a basement with no signal still unlocks, and an automatic Bluetooth retry with a guided fallback.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="friction" role="tabpanel" aria-labelledby="t-friction" hidden>
+    <h2>Six friction points, each with a measurable first move</h2>
+    <p class="lead">From about 10 recent App Store reviews (rated 3.9 from about 3k ratings) and press coverage. Hypotheses to check with the team, not findings.</p>
+    <div class="fric">
+      <div class="fl" id="fl" aria-label="Friction points"></div>
+      <div class="fd" id="fd" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="release" role="tabpanel" aria-labelledby="t-release" hidden>
+    <h2>Every app release guards unlock success, not just crashes</h2>
+    <p class="lead">Version 4.12 rolls out in stages. A stage advances only if unlock success stays within the guardrail. Try it.</p>
+    <div class="rail" id="rail"></div>
+    <div class="status" id="status" role="status"></div>
+    <div class="ctl" style="margin-top:14px">
+      <div class="row" style="margin-top:0">
+        <button class="btn" id="adv">Advance stage</button>
+        <button class="btn sec" id="replay">Replay from 1%</button>
+        <button class="btn sec" id="see" hidden>See the incident draft</button>
+      </div>
+      <div class="row">
+        <label for="thr">Guardrail: max unlock drop <b id="thrv">0.5</b> pt</label>
+        <input type="range" id="thr" min="0.2" max="1.5" step="0.1" value="0.5">
+      </div>
+      <div class="row" style="margin-bottom:0">
+        <label><input type="checkbox" id="reg" checked>Include the basement Bluetooth regression in 4.12</label>
+      </div>
+    </div>
+    <p class="note" style="margin-top:10px">A stage needs at least 300 unlocks before it is judged, so small cohorts don't raise false alarms. Sample data.</p>
+  </section>
+
+  <section id="copilot" role="tabpanel" aria-labelledby="t-copilot" hidden>
+    <h2>AI drafts the incident, a person decides</h2>
+    <p class="lead">An LLM judge scores every draft first. Nothing reaches customers automatically.</p>
+    <div class="inc" id="inc"></div>
+  </section>
+
+  <section id="measure" role="tabpanel" aria-labelledby="t-measure" hidden>
+    <h2>Every change ties to a number we review each fortnight</h2>
+    <p class="lead">Targets are starting proposals, to be set after a 30-day baseline with the team.</p>
+    <div class="metrics" id="metrics"></div>
+    <div class="about grid2">
+      <div>
+        <h3 style="margin-bottom:8px">Why I built this</h3>
+        <p>At PropertyGuru I run the same loop: Datadog, Kibana and Sentry for visibility, Squadcast for on-call, and AI with human review. A custom MCP server made our bug fixes about 30% faster. A shared UI kit took deploys from once every 2 weeks to 2–3 a week.</p>
+      </div>
+      <div>
+        <h3 style="margin-bottom:8px">Public sources</h3>
+        <p><a href="https://apps.apple.com/sg/app/getgo-carsharing/id1545316216">App Store listing</a> · <a href="https://aws.amazon.com/solutions/case-studies/getgo-case-study/">AWS case study</a> · <a href="https://en.wikipedia.org/wiki/GetGo_(carsharing_company)">Wikipedia</a> · <a href="https://www.businesstoday.com.my/2026/09/01/getgo-carsharing-platform-allows-singapore-users-to-drive-into-malaysia/">Drive to Malaysia launch</a></p>
+        <p class="note">All metrics, incidents and app versions here are invented for illustration.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+{
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* tabs */
+const tabs=[...document.querySelectorAll('[role=tab]')];
+function show(id,focus){
+  if(!tabs.some(t=>t.getAttribute('aria-controls')===id))id='health';
+  tabs.forEach(t=>{const on=t.getAttribute('aria-controls')===id;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;$(t.getAttribute('aria-controls')).hidden=!on;if(on&&focus)t.focus();});
+  if(location.hash!=='#'+id){try{history.replaceState(null,'','#'+id)}catch(e){}}
+}
+tabs.forEach((t,i)=>{
+  t.addEventListener('click',()=>show(t.getAttribute('aria-controls')));
+  t.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(d){e.preventDefault();show(tabs[(i+d+tabs.length)%tabs.length].getAttribute('aria-controls'),true);}
+  });
+});
+window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+
+/* trip health */
+const stations=[["Register",99.2,99.0],["Find car",97.6,98.0],["Book",99.6,99.5],["Unlock",98.1,99.5],["Drive",99.3,99.0],["Return",97.4,98.0],["Pay",99.7,99.5]];
+$("route").innerHTML=stations.map(([n,v,t])=>{const g=t-v,c=g<=0?"ok":g<1?"warn":"bad";return `<div class="st ${c}"><span class="dot"></span><div class="nm">${esc(n)}</div><div class="v">${v.toFixed(1)}%</div><div class="t">target ${t.toFixed(1)}</div></div>`}).join("");
+const causes=[["Bluetooth handshake timeout",41],["No signal in basement car park",27],["Car telematics unit offline",18],["Unlock credential expired",9],["Other",5]];
+$("bars").innerHTML=causes.map((c,i)=>`<div class="bar${i<2?" top":""}"><span>${esc(c[0])}</span><i style="width:${(c[1]/41*100).toFixed(0)}%"></i><em>${c[1]}%</em></div>`).join("");
+
+/* friction */
+const fr=[
+  ["Unlock and connectivity","Users toggle Bluetooth repeatedly to unlock; the app stalls offline in basement car parks.","The Bluetooth handshake has no retry path, and the phone needs signal to get an unlock credential.","Unlock success and P95 time, by location type and app version","Fetch a signed offline unlock credential at booking start; auto-retry with a guided fallback."],
+  ["Finding the car","The previous user parked outside the bay and the app didn't show where.","End-trip doesn't verify the car is inside the bay zone.","Trips ending outside the zone; time to find the car","Geofence and photo check at end-trip; show the last known position to the next user."],
+  ["Late fees and extensions","A S$50 late fee for a minute over; an extension blocked by the next booking.","No early nudge, and a booking conflict ends in a dead end.","Late returns per 1,000 trips; fee disputes","Nudge 15 minutes before the end and offer a swap to a nearby free car. A grace period is a policy call with Product."],
+  ["Support response","Slow live chat and inconsistent answers.","Agents start without the trip and car context.","First response time; repeat contacts per issue","AI drafts a reply with trip and telemetry context attached; the agent edits and sends."],
+  ["Trust in damage claims","Press reported large claim bills in 2023–24; users praise the four-angle photos.","The evidence exists, but the user can't easily see it.","Dispute rate; days to resolve a claim","AI-assisted before and after photo comparison, reviewed by a person, plus an itemised claim timeline in the app."],
+  ["Car condition","Rubbish and pet hair left by earlier renters; a hybrid that wouldn't start.","User reports reach Ops slowly and don't take the car out of service.","Faults found by the next user vs by telemetry","Turn a report plus telemetry into an Operator app task automatically, and hold the car until it's fixed."]
+];
+let fi=0;
+function renderFr(){
+  $("fl").innerHTML=fr.map((f,i)=>`<button aria-pressed="${i===fi}" data-i="${i}"><span>${i+1}</span>${esc(f[0])}</button>`).join("");
+  const f=fr[fi];
+  $("fd").innerHTML=`<h3>${esc(f[0])}</h3><dl class="kv"><dt>Public signal</dt><dd>${esc(f[1])}</dd><dt>Hypothesis</dt><dd>${esc(f[2])}</dd><dt>Metric</dt><dd>${esc(f[3])}</dd><dt>First move</dt><dd class="move">${esc(f[4])}</dd></dl>`;
+}
+$("fl").addEventListener("click",e=>{const b=e.target.closest("button");if(b){fi=+b.dataset.i;renderFr();}});
+renderFr();
+
+/* release sim */
+const base=98.1;
+const stg=[{p:1,n:120},{p:5,n:610},{p:20,n:2440},{p:50,n:6100},{p:100,n:12200}];
+const good=[98.3,98.4,98.4,98.5,98.5], bad=[98.2,97.6,96.8,96.4,96.2];
+let cur=2, halted=2, approved=false, rejected=false;
+const val=i=>($("reg").checked?bad:good)[i];
+const thr=()=>parseFloat($("thr").value);
+const drop=i=>Math.round((base-val(i))*10)/10;
+function renderRel(){
+  $("thrv").textContent=thr().toFixed(1);
+  $("rail").innerHTML=stg.map((s,i)=>{
+    let c=i<cur?"done":""; if(i===cur)c+=" cur"; if(i===halted)c="halt cur";
+    const on=i<=cur;
+    return `<div class="sg ${c}"><b>${s.p}%</b><span class="k">${on?s.n.toLocaleString()+" unlocks":"waiting"}</span><br>${on?val(i).toFixed(1)+"%":"&nbsp;"}</div>`;
+  }).join("");
+  const st=$("status");
+  if(halted>=0){st.className="status halt";st.textContent=`Halted at ${stg[halted].p}%. Unlock success ${val(halted).toFixed(1)}% vs ${base}% on 4.11, a ${drop(halted).toFixed(1)} pt drop over the ${thr().toFixed(1)} pt guardrail. Feature flag rolled back and an incident drafted.`;}
+  else if(cur===stg.length-1){st.className="status";st.textContent=`4.12 is at 100%. Unlock success ${val(cur).toFixed(1)}%, within the guardrail at every stage.`;}
+  else{st.className="status";const d=drop(cur);st.textContent=`At ${stg[cur].p}%: unlock success ${val(cur).toFixed(1)}% (${d>0?"−":"+"}${Math.abs(d).toFixed(1)} pt vs 4.11). ${stg[cur].n<300?"Sample too small to judge yet.":"Within the guardrail."}`;}
+  $("adv").disabled=halted>=0||cur===stg.length-1;
+  $("see").hidden=halted<0;
+  $("bdg").hidden=!(halted>=0&&!approved&&!rejected);
+  renderInc();
+}
+function advance(){if(halted>=0||cur>=stg.length-1)return;cur++;if(stg[cur].n>=300&&drop(cur)>thr()){halted=cur;approved=false;rejected=false;}renderRel();}
+function replay(){cur=0;halted=-1;approved=false;rejected=false;renderRel();}
+
+function renderInc(){
+  const box=$("inc");
+  if(halted<0){box.innerHTML=`<div class="empty"><p style="margin:0 auto 12px">No open incident. Advance the rollout in Guarded release with the regression on, and the copilot drafts one when the guardrail trips.</p><button class="btn sec" id="go">Go to Guarded release</button></div>`;$("go").onclick=()=>show("release",true);return;}
+  const s=stg[halted], users=Math.round(s.n*drop(halted)/100);
+  const head=`<div><span class="tag red">SEV-2 proposed</span><span class="tag">${approved?"Approved by on-call":rejected?"Rejected by on-call":"Drafted by AI, waiting for on-call"}</span></div><h3 style="font-size:22px;margin:8px 0 12px">Unlock failures up on app 4.12</h3>`;
+  if(rejected){box.innerHTML=head+`<p>Draft rejected. On-call handles the incident by hand, and the reason goes into the copilot's evaluation set.</p><button class="btn sec" id="redo">Restore draft</button>`;$("redo").onclick=()=>{rejected=false;renderRel();};return;}
+  box.innerHTML=head+`<div class="grid2"><div>
+  <p><b>Summary.</b> After 4.12 reached ${s.p}% of users, unlock success fell ${drop(halted).toFixed(1)} pt to ${val(halted).toFixed(1)}%. About ${users} unlocks failed that would have worked on 4.11. The rollout halted and the feature flag was rolled back.</p>
+  <p><b>Likely cause, 72% confidence.</b> Failures cluster in basement car parks on Android, where 4.12's new Bluetooth scan timeout is shorter than before.</p>
+  <b>Evidence</b><ul><li>82% of new failures are tagged "basement".</li><li>Only the 4.12 cohort is affected; 4.11 is flat.</li><li>Car telematics units show no fault in the window.</li></ul>
+  </div><div>
+  <b>Proposed actions</b><ol><li>Done automatically: rollout halted, flag rolled back.</li><li>Restore the 4.11 scan timeout in a 4.12.1 hotfix.</li><li>Give Customer Experience a reply template; refunds are decided by a person.</li></ol>
+  <b>LLM judge score</b><div class="score"><div>Grounded<b>4.6/5</b></div><div>Complete<b>4.2/5</b></div><div>Actionable<b>4.4/5</b></div><div>Safe to send<b>pass</b></div></div>
+  ${approved?`<div class="approved">Posted to the incident channel. Status page update queued for review.</div>`:`<div class="row"><button class="btn" id="ok">Approve and post</button><button class="btn sec" id="no">Reject</button></div>`}
+  </div></div>`;
+  if(!approved){$("ok").onclick=()=>{approved=true;renderRel();};$("no").onclick=()=>{rejected=true;renderRel();};}
+}
+$("adv").addEventListener("click",advance);
+$("replay").addEventListener("click",replay);
+$("see").addEventListener("click",()=>show("copilot",true));
+$("thr").addEventListener("input",()=>{if(halted<0)renderRel();else $("thrv").textContent=thr().toFixed(1);});
+$("reg").addEventListener("change",replay);
+
+/* measures */
+const metrics=[["Unlock success","98.1% now, 99.5% target","per app version and location type"],["P95 tap-to-unlock","11.4 s now, 5 s target","the wait a user feels"],["Change failure rate","releases needing a rollback or hotfix","DORA, per team"],["Time to restore","from alert to users unaffected","Squadcast and Datadog"],["AI draft acceptance","copilot drafts approved with light edits","plus LLM judge score"],["Cost per 1,000 trips","cloud and telemetry spend","visible to leadership"]];
+$("metrics").innerHTML=metrics.map(m=>`<div><b>${esc(m[0])}</b>${esc(m[1])}<br><span class="note">${esc(m[2])}</span></div>`).join("");
+
+renderRel();
+show(location.hash.slice(1)||"health");
+}
+</script>
+</body>
+</html>
