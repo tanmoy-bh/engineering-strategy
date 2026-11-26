@@ -30,6 +30,8 @@
   --amber:light-dark(#b86e00,#f6b73c);
   --sh:light-dark(rgba(16,24,40,.10),rgba(0,0,0,.55));
   --glow:light-dark(rgba(220,42,31,.07),rgba(255,90,79,.09));
+  --ios:light-dark(#2563eb,#6ea8ff);
+  --and:light-dark(#7c3aed,#b294ff);
   --r:16px;--ease:cubic-bezier(.2,.7,.2,1)}
 :root[data-theme=light]{color-scheme:light}
 :root[data-theme=dark]{color-scheme:dark}
@@ -265,6 +267,23 @@ input[type=checkbox]{width:18px;height:18px;accent-color:var(--red);margin:0}
 @media(max-width:960px){.sgrid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:720px){.thm{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 3.4em}.thm>span:first-child{grid-column:1/-1}.thm.h>span:first-child{display:none}.stk{grid-template-columns:4.2em minmax(0,1fr) 6em}.sgrid .card,.thmc{padding:20px}}
 
+.cmpc{padding:22px 24px;margin-bottom:22px}
+.crow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:8px 22px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.crow:last-child{border-bottom:0;padding-bottom:0}
+.crow.h{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line2);padding-top:0}
+.crow.h span{display:inline-flex;align-items:center;gap:8px}
+.cv b{display:block;font:600 17px "Inter Tight",sans-serif;font-variant-numeric:tabular-nums;margin-bottom:6px}
+.cv b .note{font:400 12.5px Inter,sans-serif}
+.cv .track{height:6px}
+.cv.ios .track i{background:var(--ios)}.cv.android .track i{background:var(--and)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none}
+.segrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0 0 18px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border:1px solid var(--line);border-radius:13px;background:var(--surface)}
+.seg button{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:0;border-radius:9px;background:transparent;color:var(--mute);font:500 14px Inter,sans-serif;cursor:pointer;transition:background .2s,color .2s,transform .2s var(--ease)}
+.seg button .i{width:15px;height:15px}
+.seg button:hover:not([aria-pressed=true]){color:var(--ink);background:var(--surface2)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--surface);font-weight:600}
+@media(max-width:720px){.crow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.crow>span:first-child{grid-column:1/-1;font-weight:500}.crow.h>span:first-child{display:none}.cmpc{padding:20px}.seg{width:100%}.seg button{flex:1 1 auto;justify-content:center;padding:0 10px}}
 footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:12.5px;color:var(--mute)}
 
 @media(max-width:960px){.grid2,.fric{grid-template-columns:minmax(0,1fr)}.figs{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.ctl{grid-template-columns:minmax(0,1fr)}.opts{justify-self:start}.fl{flex-direction:row;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.fl button{flex:none}.fl button:hover{transform:translateY(-2px)}}
@@ -354,6 +373,7 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></symbol>
   <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></symbol>
   <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24"><path d="m22 17-8.5-8.5-5 5L2 7"/><path d="M16 17h6v-6"/></symbol>
 </svg>
 
@@ -424,42 +444,49 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
   <section id="sentiment" role="tabpanel" aria-labelledby="t-sentiment" hidden>
     <div>
       <div class="eyebrow"><svg class="i"><use href="#i-smile"/></svg>03 · Review sentiment</div>
-      <h2>Reviews turned from praise to complaints, and the complaints are about operations</h2>
-      <p class="lead">Sentiment of the latest 500 App Store reviews in Singapore, January 2024 to November 2026, scored from star ratings and checked against the review text. Real data, analysed on 25 Nov 2026.</p>
+      <h2>Both stores turned from praise to complaints, and Android users rate the app lower</h2>
+      <p class="lead">The latest 500 public reviews from each store in Singapore: App Store from January 2024, Google Play from April 2024, both to November 2026. Scored from star ratings and checked against the review text. Real data, analysed on 26 Nov 2026.</p>
     </div>
-    <div class="figs">
-      <div class="fg card lift" style="--d:0"><div class="top"><span class="ico"><svg class="i"><use href="#i-msg"/></svg></span><span class="pill">3.8 ★ avg</span></div><b>500</b><span class="l">written reviews analysed</span></div>
-      <div class="fg card lift" style="--d:1"><div class="top"><span class="ico ok"><svg class="i"><use href="#i-smile"/></svg></span><span class="pill ok">4–5 ★</span></div><b>72%</b><span class="l">positive overall</span></div>
-      <div class="fg card lift bad" style="--d:2"><div class="top"><span class="ico red"><svg class="i"><use href="#i-down"/></svg></span><span class="pill red">since Jul 2025</span></div><b>88%</b><span class="l">negative recently (37 of 42)</span></div>
-      <div class="fg card lift" style="--d:3"><div class="top"><span class="ico"><svg class="i"><use href="#i-check-circle"/></svg></span></div><b>77%</b><span class="l">where the text agrees with the stars</span></div>
+    <div class="card cmpc">
+      <div class="ttl"><span class="ico"><svg class="i"><use href="#i-phone"/></svg></span><div><h3>iOS and Android side by side</h3><div class="note">500 reviews from each store, same method</div></div></div>
+      <div id="cmp"></div>
     </div>
+    <div class="segrow">
+      <span class="note">View</span>
+      <div class="seg" role="group" aria-label="Choose a store" id="seg">
+        <button type="button" data-p="all" aria-pressed="true"><svg class="i"><use href="#i-layers"/></svg>Combined</button>
+        <button type="button" data-p="ios" aria-pressed="false"><i class="dot" style="background:var(--ios)"></i>iOS · App Store</button>
+        <button type="button" data-p="android" aria-pressed="false"><i class="dot" style="background:var(--and)"></i>Android · Google Play</button>
+      </div>
+    </div>
+    <div class="figs" id="sfigs"></div>
     <div class="sgrid">
       <div class="card">
         <div class="ttl"><span class="ico"><svg class="i"><use href="#i-star"/></svg></span><div><h3>The distribution is J-shaped</h3><div class="note">Reviews by star rating; people write at the extremes</div></div></div>
         <div class="bars" id="hist"></div>
-        <div class="key"><span><i style="background:var(--ok)"></i>Positive 358 (72%)</span><span><i style="background:var(--line2)"></i>Neutral 36 (7%)</span><span><i style="background:var(--red)"></i>Negative 106 (21%)</span></div>
+        <div class="key" id="hkey"></div>
       </div>
       <div class="card">
-        <div class="ttl"><span class="ico red"><svg class="i"><use href="#i-calendar"/></svg></span><div><h3>The positive total comes from one burst</h3><div class="note">Sentiment mix per half-year, with reviews and average rating</div></div></div>
+        <div class="ttl"><span class="ico red"><svg class="i"><use href="#i-calendar"/></svg></span><div><h3 id="stkh"></h3><div class="note">Sentiment mix per half-year, with reviews and average rating</div></div></div>
         <div id="stk"></div>
-        <div class="fixes"><svg class="i" style="color:var(--amber)"><use href="#i-alert"/></svg><p>308 reviews arrived in January and February 2024, only 9 of them negative, which looks like an in-app rating prompt. Without that burst, reviewers are mostly people with a problem.</p></div>
+        <div class="fixes"><svg class="i" style="color:var(--amber)"><use href="#i-alert"/></svg><p id="stkn"></p></div>
       </div>
     </div>
     <div class="card thmc">
       <div class="ttl"><span class="ico"><svg class="i"><use href="#i-layers"/></svg></span><div><h3>What each theme does to sentiment</h3><div class="note">Share of negative and positive reviews mentioning each theme, with the average rating. A review can mention several.</div></div></div>
       <div id="thm"></div>
     </div>
-    <div class="ttl" style="margin:26px 0 14px"><span class="ico red"><svg class="i"><use href="#i-alert"/></svg></span><div><h3>What the last 42 reviews complain about</h3><div class="note">July 2025 to November 2026, paraphrased</div></div></div>
+    <div class="ttl" style="margin:26px 0 14px"><span class="ico red"><svg class="i"><use href="#i-alert"/></svg></span><div><h3>What recent complaints are about</h3><div class="note" id="recn"></div></div></div>
     <div class="metrics rec" id="recent"></div>
     <div class="about grid2">
       <div class="card lift">
         <div class="ttl"><span class="ico ok"><svg class="i"><use href="#i-bulb"/></svg></span><h3>What this means for engineering</h3></div>
-        <p>Unlocking comes up in only 1 of the last 42 reviews. The recent pain is in app flows (login, repeated verification, the photo step, adding a card) and in operations data (car condition, charges, fines). That points to funnel monitoring on those flows and a tighter loop from user reports to the fleet team, ahead of Bluetooth work.</p>
-        <p style="margin:0">Where text and stars disagree, it's usually "the app is good, the service isn't" (10 low-star reviews with positive words) or "great, but…" (27 high-star reviews with complaint words).</p>
+        <p id="eng1"></p>
+        <p style="margin:0" id="eng2"></p>
       </div>
       <div class="card lift">
         <div class="ttl"><span class="ico"><svg class="i"><use href="#i-book"/></svg></span><h3>How it was measured</h3></div>
-        <p class="note" style="margin:0">Source: Apple's public review feed for the Singapore App Store, which returns the latest 500 written reviews; Google Play is not included. Sentiment: 4–5 stars positive, 3 neutral, 1–2 negative, cross-checked with a word list of about 110 positive and negative terms with negation handling. Themes: keyword rules; 78 reviews matched no theme. Recent figures rest on 42 reviews, so read them as direction, not precision. Only aggregates are stored on this page.</p>
+        <p class="note" style="margin:0">Sources: Apple's public review feed for the Singapore App Store and Google Play's public reviews for Singapore, each giving the latest 500 written reviews, newest first. Sentiment: 4 to 5 stars positive, 3 neutral, 1 to 2 negative, cross-checked with a list of 124 positive and negative words with negation handling. Themes: keyword rules; 56 App Store and 104 Google Play reviews matched no theme. Recent figures rest on 42 App Store and 100 Google Play reviews, so read them as direction, not precision. Only aggregates and paraphrased themes are stored on this page.</p>
       </div>
     </div>
   </section>
@@ -631,15 +658,77 @@ $("see").addEventListener("click",()=>show("copilot",true));
 $("thr").addEventListener("input",()=>{if(halted<0)renderRel();else $("thrv").textContent=thr().toFixed(1);});
 $("reg").addEventListener("change",replay);
 
-/* review sentiment (aggregates from 500 App Store reviews, 25 Nov 2026) */
-const stars=[[5,234,"p"],[4,124,"p"],[3,36,""],[2,18,"n"],[1,88,"n"]];
-$("hist").innerHTML=stars.map(([k,n,c],i)=>`<div class="bar ${c}"><div class="bl"><span>${k} star${k>1?"s":""}</span><em>${n}</em></div><div class="track"><i style="--w:${(n/234*100).toFixed(0)}%;--d:${i}"></i></div></div>`).join("");
-const per=[["2024 H1",344,305,18,21,4.37],["2024 H2",50,18,9,23,2.70],["2025 H1",64,31,8,25,3.13],["2025 H2",12,1,1,10,1.50],["2026 H1",19,3,0,16,1.63],["2026 H2",11,0,0,11,1.09]];
-$("stk").innerHTML=per.map(([p,n,po,ne,ng,av])=>`<div class="stk"><span>${p}</span><div class="s" title="${po} positive, ${ne} neutral, ${ng} negative"><b class="sp" style="width:${po/n*100}%"></b><b class="su" style="width:${ne/n*100}%"></b><b class="sn" style="width:${ng/n*100}%"></b></div><em>${n} · ${av.toFixed(1)} ★</em></div>`).join("");
-const thm=[["Ease and convenience",205,189,8,4.48],["Customer support",149,98,43,3.58],["Price and fees",107,57,45,3.11],["Car condition and cleanliness",105,71,24,3.64],["Availability and parking",105,81,17,3.95],["App bugs and login",68,21,36,2.47],["Unlock and Bluetooth",62,41,11,3.63],["Signal and offline",58,40,11,3.74],["Damage and claims",34,12,19,2.53],["Late returns and extensions",32,11,17,2.44]];
-$("thm").innerHTML=`<div class="thm h"><span>Theme</span><span style="text-align:right">Negative</span><span>Positive</span><em>Avg</em></div>`+thm.map(([k,n,po,ng,av])=>`<div class="thm"><span>${esc(k)} <span class="note">${n}</span></span><div class="l"><b style="width:${ng/n*100}%" title="${Math.round(ng/n*100)}% negative"></b></div><div class="r"><b style="width:${po/n*100}%" title="${Math.round(po/n*100)}% positive"></b></div><em style="color:${av<3?"var(--red)":"inherit"}">${av.toFixed(1)} ★</em></div>`).join("");
-const rec=[["App bugs and login",12,"Login failures, repeated identity verification, the app hanging just before the photo step, no way to add a new card.","alert"],["Price and fees",11,"Charges first-time users didn't expect, and full fares for cars with broken air-conditioning.","coins"],["Damage and claims",7,"Disputed damage bills, and a traffic fine nobody was told about.","camera"],["Customer support",7,"Slow live agents and no follow-up, including on a reported safety issue.","headset"],["Car condition",5,"Poorly maintained cars and no notice about maintenance.","wrench"],["Unlock and Bluetooth",1,"Rarely raised now, despite being the classic carsharing failure.","bt"]];
-$("recent").innerHTML=rec.map(([k,n,d,ic],i)=>`<div class="mt card lift" style="--d:${i}"><span class="ico${n>=7?" red":""}">${I(ic)}</span><b>${esc(k)}<span class="pill${n>=7?" red":""}">${n} review${n>1?"s":""}</span></b><span class="d">${esc(d)}</span></div>`).join("");
+/* review sentiment: aggregates from the latest 500 App Store and 500 Google Play reviews, 26 Nov 2026 */
+const SD={"ios":{"n":500,"avg":3.8,"stars":[234,124,36,18,88],"mix":[358,36,106],"agree":90,"lp":12,"hn":29,"none":56,"halves":[["2024 H1",344,305,18,21,4.37],["2024 H2",50,18,9,23,2.7],["2025 H1",64,31,8,25,3.12],["2025 H2",12,1,1,10,1.5],["2026 H1",19,3,0,16,1.63],["2026 H2",11,0,0,11,1.09]],"themes":[["Ease and convenience",242,219,11,4.46],["Customer support",136,89,40,3.57],["Price and fees",124,73,46,3.3],["Car condition and cleanliness",121,80,29,3.56],["Availability and parking",110,93,12,4.22],["App bugs and login",65,20,33,2.52],["Unlock and Bluetooth",62,42,10,3.69],["Signal and offline",43,34,5,4.0],["Damage and claims",37,14,19,2.65],["Late returns and extensions",47,22,20,2.83]],"rn":42,"rneg":37,"rt":{"Price and fees":11,"App bugs and login":10,"Customer support":9,"Car condition and cleanliness":9,"Damage and claims":8,"Availability and parking":4,"Late returns and extensions":4,"Ease and convenience":3,"Unlock and Bluetooth":1,"Signal and offline":0}},"android":{"n":500,"avg":3.18,"stars":[186,72,46,37,159],"mix":[258,46,196],"agree":88,"lp":15,"hn":27,"none":104,"halves":[["2024 H1",49,29,4,16,3.49],["2024 H2",175,105,21,49,3.53],["2025 H1",176,105,14,57,3.43],["2025 H2",40,9,4,27,2.15],["2026 H1",38,8,2,28,1.97],["2026 H2",22,2,1,19,1.64]],"themes":[["Ease and convenience",138,121,10,4.43],["Customer support",98,32,61,2.4],["Price and fees",106,45,53,2.8],["Car condition and cleanliness",119,54,48,3.01],["Availability and parking",54,36,13,3.74],["App bugs and login",59,7,45,1.73],["Unlock and Bluetooth",38,13,18,2.71],["Signal and offline",19,12,5,3.21],["Damage and claims",28,7,19,2.04],["Late returns and extensions",41,18,19,2.83]],"rn":100,"rneg":74,"rt":{"Customer support":22,"Price and fees":22,"Car condition and cleanliness":16,"App bugs and login":14,"Damage and claims":10,"Late returns and extensions":9,"Unlock and Bluetooth":8,"Availability and parking":4,"Ease and convenience":3,"Signal and offline":3}},"all":{"n":1000,"avg":3.49,"stars":[420,196,82,55,247],"mix":[616,82,302],"agree":89,"lp":27,"hn":56,"none":160,"halves":[["2024 H1",393,334,22,37,4.26],["2024 H2",225,123,30,72,3.34],["2025 H1",240,136,22,82,3.35],["2025 H2",52,10,5,37,2.0],["2026 H1",57,11,2,44,1.86],["2026 H2",33,2,1,30,1.45]],"themes":[["Ease and convenience",380,340,21,4.45],["Customer support",234,121,101,3.08],["Price and fees",230,118,99,3.07],["Car condition and cleanliness",240,134,77,3.29],["Availability and parking",164,129,25,4.06],["App bugs and login",124,27,78,2.15],["Unlock and Bluetooth",100,55,28,3.32],["Signal and offline",62,46,10,3.76],["Damage and claims",65,21,38,2.38],["Late returns and extensions",88,40,39,2.83]],"rn":142,"rneg":111,"rt":{"Price and fees":33,"Customer support":31,"Car condition and cleanliness":25,"App bugs and login":24,"Damage and claims":18,"Late returns and extensions":13,"Unlock and Bluetooth":9,"Availability and parking":8,"Ease and convenience":6,"Signal and offline":3}}};
+const PN={ios:"iOS",android:"Android",all:"both stores combined"};
+const pct=(a,b)=>Math.round(a/b*100);
+const cmpRows=[
+  ["Average rating",p=>SD[p].avg,v=>v.toFixed(1)+" ★",5],
+  ["Positive (4 to 5 stars)",p=>pct(SD[p].mix[0],SD[p].n),v=>v+"%",100],
+  ["Negative (1 to 2 stars)",p=>pct(SD[p].mix[2],SD[p].n),v=>v+"%",100],
+  ["Negative since July 2025",p=>pct(SD[p].rneg,SD[p].rn),(v,p)=>`${v}% <span class="note">${SD[p].rneg} of ${SD[p].rn}</span>`,100],
+  ["App bugs and login, average rating",p=>SD[p].themes.find(t=>t[0]==="App bugs and login")[4],v=>v.toFixed(1)+" ★",5],
+  ["Unlock and Bluetooth in recent complaints",p=>pct(SD[p].rt["Unlock and Bluetooth"],SD[p].rneg),(v,p)=>`${v}% <span class="note">${SD[p].rt["Unlock and Bluetooth"]} of ${SD[p].rneg}</span>`,100]];
+$("cmp").innerHTML=`<div class="crow h"><span></span><span><i class="dot" style="background:var(--ios)"></i>iOS · App Store</span><span><i class="dot" style="background:var(--and)"></i>Android · Google Play</span></div>`+
+  cmpRows.map(([k,f,fmt,mx],r)=>`<div class="crow"><span>${esc(k)}</span>${["ios","android"].map(p=>{const v=f(p);return `<div class="cv ${p}"><b>${fmt(v,p)}</b><div class="track"><i style="--w:${(v/mx*100).toFixed(0)}%;--d:${r}"></i></div></div>`}).join("")}</div>`).join("");
+
+const SN={
+  ios:{stk:"The positive total comes from one burst",
+    note:"308 reviews arrived in January and February 2024, only 9 of them negative, which looks like an in-app rating prompt. Without that burst, reviewers are mostly people with a problem.",
+    eng:"Unlocking comes up in only 1 of the last 37 negative iOS reviews. The recent pain is in app flows (login, repeated verification, the photo step, adding a card) and in operations data (car condition, charges, fines). That points to funnel monitoring on those flows and a tighter loop from user reports to the fleet team."},
+  android:{stk:"Volume fell in mid-2025 and the happy reviews went with it",
+    note:"Google Play reviews ran at about 30 a month until June 2025, then dropped to about 6 a month, and most of the ones left are negative. That looks like a rating prompt switched off, the same pattern as on iOS.",
+    eng:"Android raises unlock and Bluetooth problems 8 times in 74 recent complaints, against once in 37 on iOS: the car won't lock or unlock in a basement with no signal, or the app won't connect. App bugs score 1.7 stars on Android against 2.5 on iOS, led by a Singpass face-verification loop. That points to Android-specific work: Bluetooth on a wide range of devices, offline lock and unlock, and the verification flow."},
+  all:{stk:"Both stores turn negative from mid-2025",
+    note:"Review volume dropped on both stores in mid-2025 (an iOS burst in early 2024, steady Android volume until June 2025), and the reviews that kept coming were mostly complaints.",
+    eng:"Both stores agree the recent pain is operations: charges, car condition, damage bills and support. Android adds a device problem, with unlock and Bluetooth in 8 of 74 recent Android complaints against 1 of 37 on iOS. Track unlock success per platform and per Android device model, so a release guardrail catches an Android-only regression."}};
+
+const REC=[
+  ["App bugs and login","App bugs and login","alert",
+    {ios:"Login failures, repeated identity verification, the app hanging just before the photo step, no way to add a new card.",
+     android:"Repeated Singpass face verification, a time picker that's hard to use, bookings that can't be moved earlier, the app failing to open.",
+     all:"Repeated identity and face verification on both, plus login failures on iOS and a hard-to-use time picker on Android."}],
+  ["Price and fees","Price and fees","coins",
+    {ios:"Charges first-time users didn't expect, and full fares for cars with broken air-conditioning.",
+     android:"Mileage fees that only appear on the final bill, late fees charged more than once, cancellation and car park gantry fees.",
+     all:"Charges users didn't expect: mileage on the final bill, repeated late fees, full fares for cars with broken air-conditioning."}],
+  ["Customer support","Customer support","headset",
+    {ios:"Slow live agents and no follow-up, including on a reported safety issue.",
+     android:"An AI chatbot that doesn't resolve anything, busy live agents, and email-only contact when an account is suspended.",
+     all:"Slow or busy live agents, an unhelpful chatbot, and no follow-up on reported issues."}],
+  ["Car condition","Car condition and cleanliness","wrench",
+    {ios:"Poorly maintained cars and no notice about maintenance.",
+     android:"Dirty cars, smoke and fishy smells, a flat tyre, a dead battery and broken air-conditioning.",
+     all:"Dirty or poorly maintained cars, and no notice before a car with a fault is handed over."}],
+  ["Damage and claims","Damage and claims","camera",
+    {ios:"Disputed damage bills, and a traffic fine nobody was told about.",
+     android:"Bills for scratches users say they didn't cause, with no footage or breakdown shared.",
+     all:"Disputed damage bills without evidence or a breakdown, and fines users weren't told about."}],
+  ["Unlock and Bluetooth","Unlock and Bluetooth","bt",
+    {ios:"Rarely raised on iOS now, despite being the classic carsharing failure.",
+     android:"Can't lock or unlock the car in an underground car park with no signal, or can't connect to the car at all.",
+     all:"Almost only on Android: locking and unlocking in basements, and connecting to the car."}]];
+
+function renderSent(p){
+  const d=SD[p],[po,ne,ng]=d.mix,mxs=Math.max(...d.stars);
+  document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===p));
+  $("sfigs").innerHTML=[
+    `<div class="fg card lift" style="--d:0"><div class="top"><span class="ico">${I("msg")}</span><span class="pill">${d.avg.toFixed(1)} ★ avg</span></div><b>${d.n.toLocaleString("en")}</b><span class="l">written reviews analysed</span></div>`,
+    `<div class="fg card lift" style="--d:1"><div class="top"><span class="ico ok">${I("smile")}</span><span class="pill ok">4 to 5 ★</span></div><b>${pct(po,d.n)}%</b><span class="l">positive overall</span></div>`,
+    `<div class="fg card lift bad" style="--d:2"><div class="top"><span class="ico red">${I("down")}</span><span class="pill red">since Jul 2025</span></div><b>${pct(d.rneg,d.rn)}%</b><span class="l">negative recently (${d.rneg} of ${d.rn})</span></div>`,
+    `<div class="fg card lift" style="--d:3"><div class="top"><span class="ico">${I("check-circle")}</span></div><b>${d.agree}%</b><span class="l">where the text agrees with the stars</span></div>`].join("");
+  $("hist").innerHTML=d.stars.map((n,i)=>{const k=5-i,c=k>=4?"p":k<=2?"n":"";return `<div class="bar ${c}"><div class="bl"><span>${k} star${k>1?"s":""}</span><em>${n}</em></div><div class="track"><i style="--w:${(n/mxs*100).toFixed(0)}%;--d:${i}"></i></div></div>`}).join("");
+  $("hkey").innerHTML=`<span><i style="background:var(--ok)"></i>Positive ${po} (${pct(po,d.n)}%)</span><span><i style="background:var(--line2)"></i>Neutral ${ne} (${pct(ne,d.n)}%)</span><span><i style="background:var(--red)"></i>Negative ${ng} (${pct(ng,d.n)}%)</span>`;
+  $("stkh").textContent=SN[p].stk;$("stkn").textContent=SN[p].note;
+  $("stk").innerHTML=d.halves.map(([h,n,a,b,c,av])=>`<div class="stk"><span>${h}</span><div class="s" title="${a} positive, ${b} neutral, ${c} negative"><b class="sp" style="width:${a/n*100}%"></b><b class="su" style="width:${b/n*100}%"></b><b class="sn" style="width:${c/n*100}%"></b></div><em>${n} · ${av.toFixed(1)} ★</em></div>`).join("");
+  $("thm").innerHTML=`<div class="thm h"><span>Theme</span><span style="text-align:right">Negative</span><span>Positive</span><em>Avg</em></div>`+[...d.themes].sort((a,b)=>b[1]-a[1]).map(([k,n,a,c,av])=>`<div class="thm"><span>${esc(k)} <span class="note">${n}</span></span><div class="l"><b style="width:${c/n*100}%" title="${pct(c,n)}% negative"></b></div><div class="r"><b style="width:${a/n*100}%" title="${pct(a,n)}% positive"></b></div><em style="color:${av<3?"var(--red)":"inherit"}">${av.toFixed(1)} ★</em></div>`).join("");
+  $("recn").textContent=`July 2025 to November 2026, ${PN[p]}: ${d.rneg} negative reviews, paraphrased. Count is how many mention each theme.`;
+  $("recent").innerHTML=REC.map(([k,key,ic,t],i)=>{const n=d.rt[key],hi=n/d.rneg>=.2;return `<div class="mt card lift" style="--d:${i}"><span class="ico${hi?" red":""}">${I(ic)}</span><b>${esc(k)}<span class="pill${hi?" red":""}">${n} of ${d.rneg}</span></b><span class="d">${esc(t[p])}</span></div>`}).join("");
+  $("eng1").textContent=SN[p].eng;
+  $("eng2").textContent=`Where text and stars disagree, it's usually "the app is good, the service isn't" (${d.lp} low-star reviews with positive words) or "great, but…" (${d.hn} high-star reviews with complaint words).`;
+}
+$("seg").addEventListener("click",e=>{const b=e.target.closest("button[data-p]");if(b)renderSent(b.dataset.p);});
+renderSent("all");
 
 /* measures */
 const metrics=[["Unlock success","98.1% now, 99.5% target","per app version and location type","unlock"],["P95 tap-to-unlock","11.4 s now, 5 s target","the wait a user feels","timer"],["Change failure rate","releases needing a rollback or hotfix","DORA, per team","branch"],["Time to restore","from alert to users unaffected","Squadcast and Datadog","buoy"],["AI draft acceptance","copilot drafts approved with light edits","plus LLM judge score","sparkles"],["Cost per 1,000 trips","cloud and telemetry spend","visible to leadership","coins"]];

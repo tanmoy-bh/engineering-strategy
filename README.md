@@ -8,14 +8,14 @@ Live at **https://projects.tanmoybh.com/engineering-strategy/** (passphrase prot
 | --- | --- |
 | Trip health | Success vs target for each step of a trip, and failed unlocks by cause |
 | What users report | Six friction points from public app reviews and press, each with a hypothesis, a metric and a first move |
-| Review sentiment | Sentiment of the latest 500 public App Store reviews: star distribution, half-year trend, sentiment by theme and what recent reviews complain about |
+| Review sentiment | Sentiment of the latest 500 public reviews from each of the App Store and Google Play, with Combined, iOS and Android views and a side-by-side comparison: star distribution, half-year trend, sentiment by theme and what recent reviews complain about |
 | Guarded release | A staged rollout that halts itself when unlock success drops past the guardrail |
 | AI copilot | An incident draft scored by an LLM judge and approved by a person |
 | How I'd measure | The numbers each change is tied to |
 
 ## What is real and what is sample
 
-**Real:** the friction themes, taken from public App Store reviews and press coverage, and the Review sentiment tab, computed on 25 Nov 2026 from the latest 500 public App Store reviews (only aggregates and paraphrased themes are stored). **Sample:** every metric, version, incident and score. The page is not affiliated with or endorsed by any company.
+**Real:** the friction themes, taken from public App Store reviews and press coverage, and the Review sentiment tab, computed on 26 Nov 2026 from the latest 500 public reviews on each of the App Store and Google Play (only aggregates and paraphrased themes are stored). **Sample:** every metric, version, incident and score. The page is not affiliated with or endorsed by any company.
 
 ## Layout
 
