@@ -60,6 +60,7 @@ header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 7
 .meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--mute);padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);white-space:nowrap}
 .chip .i{width:14px;height:14px}
+.chip.conf{color:var(--red);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:11.5px;border-color:color-mix(in srgb,var(--red) 45%,var(--line));background:color-mix(in srgb,var(--red) 9%,var(--surface))}
 .icon-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;min-width:34px;padding:0 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 13px Inter,sans-serif;text-decoration:none;cursor:pointer;transition:transform .2s var(--ease),border-color .2s,background .2s}
 .icon-btn:hover{transform:translateY(-1px);border-color:var(--line2)}
 .icon-btn .i{width:16px;height:16px}
@@ -289,6 +290,9 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
 @media(max-width:960px){.grid2,.fric{grid-template-columns:minmax(0,1fr)}.figs{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.ctl{grid-template-columns:minmax(0,1fr)}.opts{justify-self:start}.fl{flex-direction:row;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.fl button{flex:none}.fl button:hover{transform:translateY(-2px)}}
 @media(max-width:720px){
   .meta .chip,.brand small,.icon-btn .lbl{display:none}
+  .meta .chip.conf{display:inline-flex;padding:4px 8px;font-size:10.5px}
+  .meta .chip.conf .i{display:none}
+  .meta{flex-wrap:nowrap;gap:6px;flex:none}
   .hd{flex-wrap:nowrap;padding-top:10px}.brand h1{font-size:17px}.logo{width:34px;height:34px;border-radius:10px}.tabs{margin-top:6px}
   .rail{grid-template-columns:repeat(5,minmax(7.2em,1fr));overflow-x:auto;padding-bottom:4px}
   .metrics{grid-template-columns:minmax(0,1fr)}
@@ -374,6 +378,7 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
   <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></symbol>
   <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol>
   <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24"><path d="m22 17-8.5-8.5-5 5L2 7"/><path d="M16 17h6v-6"/></symbol>
 </svg>
 
@@ -384,6 +389,7 @@ footer{max-width:1180px;margin:0 auto;padding:8px max(3vw,16px) 36px;font-size:1
       <div><h1>Engineering Strategy</h1><small>Unlock to return · by Tanmoy Bhattacharjee</small></div>
     </div>
     <div class="meta">
+      <span class="chip conf" title="Confidential: prepared for discussion, please do not share"><svg class="i"><use href="#i-lock"/></svg>Confidential</span>
       <span class="chip"><svg class="i"><use href="#i-chart"/></svg>Sample data, public information only</span>
       <span class="chip">Not affiliated with GetGo</span>
       <button class="icon-btn" id="theme" type="button" aria-label="Switch colour theme"><svg class="i"><use href="#i-moon"/></svg></button>
